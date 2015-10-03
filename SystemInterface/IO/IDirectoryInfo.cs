@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting;
 using System.Security.AccessControl;
@@ -212,5 +213,48 @@ namespace SystemInterface.IO
         /// </summary>
         /// <returns>Returns the original path that was passed by the user.</returns>
         string ToString();
+
+        /// <summary>
+        /// Returns an enumerable collection of directory information in the current directory.
+        /// </summary>
+        /// <returns>An enumerable collection of directories in the current directory.</returns>
+        IEnumerable<IDirectoryInfo> EnumerateDirectories();
+
+        /// <summary>
+        /// Returns an enumerable collection of directory information that matches a specified search pattern.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all directories.</param>
+        /// <returns>An enumerable collection of directories that matches searchPattern.</returns>
+        IEnumerable<IDirectoryInfo> EnumerateDirectories(string searchPattern);
+
+        /// <summary>
+        /// Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all directories.</param>
+        /// <param name="searchOption">One of the enumeration values that specifies whether the search operation should include only the current directory or all subdirectories. The default value is TopDirectoryOnly.</param>
+        /// <returns>An enumerable collection of directories that matches searchPattern and searchOption.</returns>
+        IEnumerable<IDirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption);
+
+        /// <summary>
+        /// Returns an enumerable collection of file information in the current directory.
+        /// </summary>
+        /// <returns>An enumerable collection of the files in the current directory.</returns>
+        IEnumerable<IFileInfo> EnumerateFiles();
+
+        /// <summary>
+        /// Returns an enumerable collection of file information that matches a search pattern.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all files.</param>
+        /// <returns>An enumerable collection of files that matches searchPattern.</returns>
+        IEnumerable<IFileInfo> EnumerateFiles(string searchPattern);
+
+        /// <summary>
+        /// Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all files.</param>
+        /// <param name="searchOption">One of the enumeration values that specifies whether the search operation should include only the current directory or all subdirectories. The default value is TopDirectoryOnly.</param>
+        /// <returns>An enumerable collection of files that matches searchPattern and searchOption.</returns>
+        IEnumerable<IFileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption);
+
     }
 }

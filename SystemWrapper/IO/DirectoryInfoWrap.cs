@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting;
@@ -7,6 +8,7 @@ using SystemInterface;
 using SystemInterface.IO;
 using SystemInterface.Security.AccessControl;
 using SystemWrapper.Security.AccessControl;
+using System.Linq;
 
 namespace SystemWrapper.IO
 {
@@ -294,6 +296,42 @@ namespace SystemWrapper.IO
             for (int i = 0; i < directoryInfos.Length; i++)
                 directoryInfoWraps[i] = new DirectoryInfoWrap(directoryInfos[i]);
             return directoryInfoWraps;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IDirectoryInfo> EnumerateDirectories()
+        {
+            return this.DirectoryInfo.EnumerateDirectories().Select(dir => new DirectoryInfoWrap(dir));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IDirectoryInfo> EnumerateDirectories(string searchPattern)
+        {
+            return this.DirectoryInfo.EnumerateDirectories(searchPattern).Select(dir => new DirectoryInfoWrap(dir));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IDirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
+        {
+            return this.DirectoryInfo.EnumerateDirectories(searchPattern, searchOption).Select(dir => new DirectoryInfoWrap(dir));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileInfo> EnumerateFiles()
+        {
+            return this.DirectoryInfo.EnumerateFiles().Select(file => new FileInfoWrap(file));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileInfo> EnumerateFiles(string searchPattern)
+        {
+            return this.DirectoryInfo.EnumerateFiles(searchPattern).Select(file => new FileInfoWrap(file));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption)
+        {
+            return this.DirectoryInfo.EnumerateFiles(searchPattern, searchOption).Select(file => new FileInfoWrap(file));
         }
     }
 }
