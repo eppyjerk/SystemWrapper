@@ -132,5 +132,58 @@ namespace SystemWrapper.Tests.IO
             Assert.AreEqual(1, files.Count());
         }
 
+        [Test]
+        public void EnumerateFileSystemInfos_test()
+        {
+            string path = new DirectoryWrap().GetCurrentDirectory();
+            IDirectoryInfo directoryInfoWrap = new DirectoryInfoWrap(path);
+            var infos = directoryInfoWrap.EnumerateFileSystemInfos();
+
+            Assert.IsTrue(infos.Any(i => i is IFileInfo));
+            Assert.IsTrue(infos.Any(i => i is IDirectoryInfo));
+        }
+
+        [Test]
+        public void EnumerateFileSystemInfos_searchPattern_match()
+        {
+            string path = new DirectoryWrap().GetCurrentDirectory();
+            IDirectoryInfo directoryInfoWrap = new DirectoryInfoWrap(path);
+            var infos = directoryInfoWrap.EnumerateFileSystemInfos("*a*");
+
+            Assert.IsTrue(infos.Any(i => i is IFileInfo));
+            Assert.IsTrue(infos.Any(i => i is IDirectoryInfo));
+        }
+
+        [Test]
+        public void EnumerateFileSystemInfos_searchPattern_nomatch()
+        {
+            string path = new DirectoryWrap().GetCurrentDirectory();
+            IDirectoryInfo directoryInfoWrap = new DirectoryInfoWrap(path);
+            var infos = directoryInfoWrap.EnumerateFileSystemInfos("*NOT_FOUND*");
+
+            Assert.AreEqual(0, infos.Count());
+        }
+
+        [Test]
+        public void EnumerateFileSystemInfos_searchPatternOption_top()
+        {
+            string path = new DirectoryWrap().GetCurrentDirectory();
+            IDirectoryInfo directoryInfoWrap = new DirectoryInfoWrap(path);
+            var infos = directoryInfoWrap.EnumerateFileSystemInfos("*a*", System.IO.SearchOption.TopDirectoryOnly);
+
+            Assert.IsTrue(infos.Any(i => i is IFileInfo));
+            Assert.IsTrue(infos.Any(i => i is IDirectoryInfo));
+        }
+
+        [Test]
+        public void EnumerateFileSystemInfos_searchPatternOption_all()
+        {
+            string path = new DirectoryWrap().GetCurrentDirectory();
+            IDirectoryInfo directoryInfoWrap = new DirectoryInfoWrap(path);
+            var infos = directoryInfoWrap.EnumerateFileSystemInfos("*BinaryReader*", System.IO.SearchOption.AllDirectories);
+
+            Assert.IsTrue(infos.Any(i => i is IFileInfo));
+            Assert.IsFalse(infos.Any(i => i is IDirectoryInfo));
+        }
     }
 }

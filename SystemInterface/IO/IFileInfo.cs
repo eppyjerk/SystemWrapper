@@ -10,7 +10,7 @@ namespace SystemInterface.IO
     /// Wrapper for <see cref="T:System.IO.FileInfo"/> class.
     /// </summary> 
      [CLSCompliant(false)]
-    public interface IFileInfo
+    public interface IFileInfo : IFileSystemInfo
     {
     	/// <summary>
     	/// Initializes a new instance of the <see cref="T:SystemInterface.IO.FileInfoWrap"/> class on the specified path. 
@@ -28,18 +28,6 @@ namespace SystemInterface.IO
         // Properties
 
         /// <summary>
-        ///  Gets or sets the <see cref="System.IO.FileAttributes"/> of the current Gets or sets the creation time, in coordinated universal time (UTC), of the current FileSystemInfo object. . 
-        /// </summary>
-        FileAttributes Attributes { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time of the current <see cref="T:System.IO.FileSystemInfo"/> object.
-        /// </summary>
-        IDateTime CreationTime { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time, in coordinated universal time (UTC), of the current <see cref="T:System.IO.FileSystemInfo"/> object. 
-        /// </summary>
-        IDateTime CreationTimeUtc { get; set; }
-        /// <summary>
         /// Gets an instance of the parent directory.
         /// </summary>
         IDirectoryInfo Directory { get; }
@@ -48,49 +36,17 @@ namespace SystemInterface.IO
         /// </summary>
         string DirectoryName { get; }
         /// <summary>
-        /// Gets a value indicating whether a file exists. 
-        /// </summary>
-        bool Exists { get; }
-        /// <summary>
-        /// Gets the string representing the extension part of the file.
-        /// </summary>
-        string Extension { get; }
-        /// <summary>
         /// Gets <see cref="T:System.IO.FileInfo"/> object.
         /// </summary>
         FileInfo FileInfoInstance { get; }
-        /// <summary>
-        /// Gets the full path of the directory or file.
-        /// </summary>
-        string FullName { get; }
         /// <summary>
         /// Gets or sets a value that determines if the current file is read only.
         /// </summary>
         bool IsReadOnly { get; set; }
         /// <summary>
-        /// Gets or sets the time the current file or directory was last accessed. 
-        /// </summary>
-        IDateTime LastAccessTime { get; set; }
-        /// <summary>
-        /// Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.
-        /// </summary>
-        IDateTime LastAccessTimeUtc { get; set; }
-        /// <summary>
-        /// Gets or sets the time when the current file or directory was last written to.
-        /// </summary>
-        IDateTime LastWriteTime { get; set; }
-        /// <summary>
-        /// Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
-        /// </summary>
-        IDateTime LastWriteTimeUtc { get; set; }
-        /// <summary>
         /// Gets the size, in bytes, of the current file.
         /// </summary>
         long Length { get; }
-        /// <summary>
-        /// Gets the name of the file. 
-        /// </summary>
-        string Name { get; }
 
         // Methods
 
@@ -127,10 +83,6 @@ namespace SystemInterface.IO
         /// </summary>
         [ComVisible(false)]
         void Decrypt();
-        /// <summary>
-        /// Permanently deletes a file.
-        /// </summary>
-        void Delete();
         /// <summary>
         /// Encrypts a file so that only the account used to encrypt the file can decrypt it. 
         /// </summary>
@@ -189,10 +141,6 @@ namespace SystemInterface.IO
         /// <returns>A new write-only unshared IFileStreamWrap object.</returns>
         IFileStream OpenWrite();
         /// <summary>
-        /// Refreshes the state of the object.
-        /// </summary>
-        void Refresh();
-        /// <summary>
         /// Replaces the contents of a specified file with the file described by the current IFileInfoWrap object, deleting the original file, and creating a backup of the replaced file.
         /// </summary>
         /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
@@ -214,10 +162,5 @@ namespace SystemInterface.IO
         /// </summary>
         /// <param name="fileSecurity">A IFileSecurityWrap object that describes an access control list (ACL) entry to apply to the current file.</param>
         void SetAccessControl(IFileSecurity fileSecurity);
-        /// <summary>
-        /// Returns the path as a string.
-        /// </summary>
-        /// <returns>A string representing the path.</returns>
-        string ToString();
     }
 }

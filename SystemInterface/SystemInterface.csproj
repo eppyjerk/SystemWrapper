@@ -78,6 +78,7 @@
     <Compile Include="IO\IFile.cs" />
     <Compile Include="IO\IFileInfo.cs" />
     <Compile Include="IO\IFileStream.cs" />
+    <Compile Include="IO\IFileSystemInfo.cs" />
     <Compile Include="IO\IFileSystemWatcher.cs" />
     <Compile Include="IO\IMemoryStream.cs" />
     <Compile Include="IO\IPath.cs" />

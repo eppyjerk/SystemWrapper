@@ -11,7 +11,7 @@ namespace SystemInterface.IO
     /// Wrapper for <see cref="T:System.IO.DirectoryInfo"/> class.
     /// </summary>	  
     [CLSCompliant(false)]
-    public interface IDirectoryInfo
+    public interface IDirectoryInfo : IFileSystemInfo
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SystemInterface.IO.DirectoryInfoWrap"/> class on the specified path. 
@@ -29,53 +29,9 @@ namespace SystemInterface.IO
         // Properties
 
         /// <summary>
-        ///  Gets or sets the <see cref="System.IO.FileAttributes"/> of the current Gets or sets the creation time, in coordinated universal time (UTC), of the current FileSystemInfo object. . 
-        /// </summary>
-        FileAttributes Attributes { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time of the current <see cref="T:System.IO.FileSystemInfo"/> object.
-        /// </summary>
-        IDateTime CreationTime { get; set; }
-        /// <summary>
-        /// Gets or sets the creation time, in coordinated universal time (UTC), of the current <see cref="T:System.IO.FileSystemInfo"/> object. 
-        /// </summary>
-        IDateTime CreationTimeUtc { get; set; }
-        /// <summary>
         /// Gets <see cref="T:System.IO.DirectoryInfo"/> object.
         /// </summary>
         DirectoryInfo DirectoryInfo { get; }
-        /// <summary>
-        ///  Gets a value indicating whether the directory exists. 
-        /// </summary>
-        bool Exists { get; }
-        /// <summary>
-        /// Gets the string representing the extension part of the file.
-        /// </summary>
-        string Extension { get; }
-        /// <summary>
-        /// Gets the full path of the directory or file.
-        /// </summary>
-        string FullName { get; }
-        /// <summary>
-        /// Gets or sets the time the current file or directory was last accessed. 
-        /// </summary>
-        IDateTime LastAccessTime { get; set; }
-        /// <summary>
-        /// Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.
-        /// </summary>
-        IDateTime LastAccessTimeUtc { get; set; }
-        /// <summary>
-        /// Gets or sets the time when the current file or directory was last written to.
-        /// </summary>
-        IDateTime LastWriteTime { get; set; }
-        /// <summary>
-        /// Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
-        /// </summary>
-        IDateTime LastWriteTimeUtc { get; set; }
-        /// <summary>
-        /// Gets the name of this <see cref="T:System.IO.DirectoryInfo"/> instance. 
-        /// </summary>
-        string Name { get; }
         /// <summary>
         /// Gets the parent directory of a specified subdirectory. 
         /// </summary>
@@ -115,10 +71,6 @@ namespace SystemInterface.IO
         /// <param name="directorySecurity">The security to apply. </param>
         /// <returns>The last directory specified in <paramref name="path"/>.</returns>
         IDirectoryInfo CreateSubdirectory(string path, IDirectorySecurity directorySecurity);
-        /// <summary>
-        /// Deletes this <see cref="T:System.IO.DirectoryInfo"/> if it is empty.
-        /// </summary>
-        void Delete();
         /// <summary>
         /// Deletes this instance of a IDirectoryInfoWrap, specifying whether to delete subdirectories and files. 
         /// </summary>
@@ -200,19 +152,10 @@ namespace SystemInterface.IO
         /// <param name="destDirName">The name and path to which to move this directory. The destination cannot be another disk volume or a directory with the identical name. It can be an existing directory to which you want to add this directory as a subdirectory.</param>
         void MoveTo(string destDirName);
         /// <summary>
-        /// Refreshes the state of the object.
-        /// </summary>
-        void Refresh();
-        /// <summary>
         /// Applies access control list (ACL) entries described by a DirectorySecurity object to the directory described by the current DirectoryInfo object. 
         /// </summary>
         /// <param name="directorySecurity">A IDirectorySecurityWrap object that describes an ACL entry to apply to the directory described by the path parameter. </param>
         void SetAccessControl(IDirectorySecurity directorySecurity);
-        /// <summary>
-        /// Returns the original path that was passed by the user. 
-        /// </summary>
-        /// <returns>Returns the original path that was passed by the user.</returns>
-        string ToString();
 
         /// <summary>
         /// Returns an enumerable collection of directory information in the current directory.
@@ -255,6 +198,27 @@ namespace SystemInterface.IO
         /// <param name="searchOption">One of the enumeration values that specifies whether the search operation should include only the current directory or all subdirectories. The default value is TopDirectoryOnly.</param>
         /// <returns>An enumerable collection of files that matches searchPattern and searchOption.</returns>
         IEnumerable<IFileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption);
+
+        /// <summary>
+        /// Returns an enumerable collection of file system information in the current directory.
+        /// </summary>
+        /// <returns>An enumerable collection of file system information in the current directory.</returns>
+        IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos();
+
+        /// <summary>
+        /// Returns an enumerable collection of file system information that matches a specified search pattern.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all files and directories.</param>
+        /// <returns>An enumerable collection of file system information objects that matches searchPattern.</returns>
+        IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos(string searchPattern);
+
+        /// <summary>
+        /// Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.
+        /// </summary>
+        /// <param name="searchPattern">The search string. The default pattern is "*", which returns all files and directories.</param>
+        /// <param name="searchOption">One of the enumeration values that specifies whether the search operation should include only the current directory or all subdirectories. The default value is TopDirectoryOnly.</param>
+        /// <returns>An enumerable collection of file system information objects that matches searchPattern and searchOption.</returns>
+        IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption);
 
     }
 }

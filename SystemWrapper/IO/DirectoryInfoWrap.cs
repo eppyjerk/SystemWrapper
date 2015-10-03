@@ -333,5 +333,38 @@ namespace SystemWrapper.IO
         {
             return this.DirectoryInfo.EnumerateFiles(searchPattern, searchOption).Select(file => new FileInfoWrap(file));
         }
+
+        private IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos(IEnumerable<FileSystemInfo> items)
+        {
+            return items.Select(item =>
+            {
+                if (item is System.IO.DirectoryInfo)
+                {
+                    return new DirectoryInfoWrap(item as System.IO.DirectoryInfo) as IFileSystemInfo;
+                }
+                else
+                {
+                    return new FileInfoWrap(item as System.IO.FileInfo) as IFileSystemInfo;
+                }
+            });
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos()
+        {
+            return this.EnumerateFileSystemInfos(this.DirectoryInfo.EnumerateFileSystemInfos());
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos(string searchPattern)
+        {
+            return this.EnumerateFileSystemInfos(this.DirectoryInfo.EnumerateFileSystemInfos(searchPattern));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption)
+        {
+            return this.EnumerateFileSystemInfos(this.DirectoryInfo.EnumerateFileSystemInfos(searchPattern, searchOption));
+        }
     }
 }
